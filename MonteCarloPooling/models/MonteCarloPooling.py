@@ -6,29 +6,28 @@ import torch.nn.functional as F
 class MonteCarloPooling(nn.Module):
     def __init__(self, pool_size=(2, 2)):
         super(MonteCarloPooling, self).__init__()
-        self.pool_size = pool_size  # 设置Monte Carlo池化的池大小
+        self.pool_size = pool_size
 
-    def forward(self, inputs):
-        # 获取输入张量的形状（批大小，通道数，高度，宽度）
-        shape = inputs.shape
+    def forward(self, x):
+        # 获取输入尺寸
+        batch_size, channels, height, width = x.size()
 
-        # 初始化一个空的张量，用于存放池化后的输出
-        pooled = torch.zeros((shape[0], shape[1], shape[2] // self.pool_size[0], shape[3] // self.pool_size[1]))
+        # 选择要采样的块
+        pooled_height = height // self.pool_size[0]
+        pooled_width = width // self.pool_size[1]
 
-        # 按照pool_size的步长遍历输入张量
-        for i in range(0, shape[2], self.pool_size[0]):
-            for j in range(0, shape[3], self.pool_size[1]):
-                # 从输入张量中提取出大小为(pool_size[0], pool_size[1])的块
-                block = inputs[:, :, i:i+self.pool_size[0], j:j+self.pool_size[1]]
+        # 初始化输出
+        pooled = torch.zeros((batch_size, channels, pooled_height, pooled_width)).to(x.device)
 
-                # 对这个块进行Monte Carlo采样
-                # 随机从每个块中选择一个元素，对每个通道和批中的每个样本进行此操作
-                # 注意：因为PyTorch没有torch.choice，我们使用torch.randint进行随机索引
-                rand_idx = torch.randint(low=0, high=block.numel() // shape[0], size=(shape[0],), dtype=torch.long)
-                block_flat = block.reshape(shape[0], -1)
-                pooled[:, :, i // self.pool_size[0], j // self.pool_size[1]] = block_flat[torch.arange(shape[0]), rand_idx]
+        # 对输入进行采样
+        for i in range(pooled_height):
+            for j in range(pooled_width):
+                block = x[:, :, i * self.pool_size[0]:(i + 1) * self.pool_size[0],
+                        j * self.pool_size[1]:(j + 1) * self.pool_size[1]]
+                block_flat = block.reshape(batch_size, channels, -1)
+                selected = torch.multinomial(block_flat, 1).squeeze()
+                pooled[:, :, i, j] = selected
 
-        # 最终的池化张量
         return pooled
 
 
@@ -81,9 +80,8 @@ class MC_LeNet(nn.Module):
         return x
 
 
-# x = torch.rand(2, 1, 28, 28)
-# net = MC_LeNet()
-# y = net(x)
-# print(y)
-
+x = torch.rand(2, 1, 28, 28)
+net = MC_LeNet()
+y = net(x)
+print(y)
 
