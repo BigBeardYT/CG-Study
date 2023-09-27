@@ -1,15 +1,7 @@
 import torch
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
-# import matplotlib
-
 from my_utils.load_models import get_model
-
-# from RgNormResNet.my_utils.set_random_seeds import setup_seed
-#
-# # 设置随机数种子
-# random_seed = 1313
-# setup_seed(random_seed)
 
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -33,24 +25,20 @@ def my_train(data_name, model_name, num_classes, train_loader, test_loader,
         train_loss_lst, valid_loss_lst = [], []
         best_acc = 0.0
         for epoch in range(num_epochs):
-
+            # 转换到训练模式
             model.train()
-
             for batch_idx, (features, targets) in enumerate(train_loader):
-
-                ### PREPARE MINIBATCH
+                ### 数据准备
                 features, targets = features.to(device), targets.to(device)
-
-                ### FORWARD AND BACK PROP
+                ### 前向和反向传播
                 outputs = model(features)
-
                 predicts = F.softmax(outputs, dim=1)
                 loss = F.cross_entropy(outputs, targets)
                 optimizer.zero_grad()
 
                 loss.backward()
 
-                ### UPDATE MODEL PARAMETERS
+                ### 更新模型参数
                 optimizer.step()
                 if batch_idx % 75 == 0:
                     train_loss_lst.append(loss.item())
