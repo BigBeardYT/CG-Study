@@ -44,7 +44,7 @@ def noise_attack(noise_name, data_name, model_name,
         print('第{}次攻击, 模型 {}, 数据集 {}'.format(i, model_name, data_name))
         # 加载模型
         attacked_model = get_model(model_name, in_features=in_features, num_classes=num_classes).to(device)
-        print('模型:', attacked_model)
+
         # 普通模型直接存储的路径
         attacked_model_params_path = '../savemodel/' + data_name + '_' + model_name \
                                      + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
