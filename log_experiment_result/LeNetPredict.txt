@@ -1,0 +1,6 @@
+第1次预测, 模型: LeNet, 数据集: Mnist
+模型参数所在位置: ../savemodel/Mnist_LeNet_bz128_ep10_lr0.01_seedNone1.pth
+预测准确率为: 9925 / 10000 = 99.25
+第2次预测, 模型: LeNet, 数据集: Mnist
+模型参数所在位置: ../savemodel/Mnist_LeNet_bz128_ep10_lr0.01_seedNone2.pth
+预测准确率为: 9935 / 10000 = 99.35

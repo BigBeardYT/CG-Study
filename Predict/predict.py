@@ -14,7 +14,7 @@ Svhn_data_name = 'SVHN'
 
 # 模型
 Ising_LeNet_model_name = 'IsingLeNet'
-
+LeNet_model_name = 'LeNet'
 
 # 预测，加载对应数据集 -> 加载模型 -> 预测
 """ ######## 以下参数 手动设置 ######### """
@@ -24,7 +24,7 @@ lr = 0.01
 # 数据集
 data_name = Mnist_data_name
 # 模型
-model_name = Ising_LeNet_model_name
+model_name = LeNet_model_name
 """ ######## 以上参数 手动设置 ######### """
 num_classes = 10
 
