@@ -3,9 +3,9 @@ import sys
 sys.path.append("..")
 import torch
 import torch.nn as nn
-from RgNormResNet_3.my_utils.pgd import *
-from RgNormResNet_3.my_utils.fgsm import *
-from RgNormResNet_3.my_utils.load_models import get_model
+from my_utils.pgd import *
+from my_utils.fgsm import *
+from my_utils.load_models import get_model
 import torch.nn.functional as F
 # 导入datetime模块
 from datetime import datetime
@@ -17,7 +17,7 @@ now = datetime.now()
 print("当前日期为: {}, 时间: {}".format(now.date(), now.strftime("%H:%M:%S")))
 
 device = 'cuda'
-epsilons = [0.01, 8/255, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
+epsilons = [0.01, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
 
 
 def noise_attack(noise_name, data_name, model_name,
@@ -45,13 +45,15 @@ def noise_attack(noise_name, data_name, model_name,
         # 加载模型
         attacked_model = get_model(model_name, in_features=in_features, num_classes=num_classes).to(device)
         print('模型:', attacked_model)
-        # 路径
-        # attacked_model_params_path = '../savemodel/' + data_name + '_' + model_name \
-        #                              + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
-        #                              '_lr' + str(lr) + '_seedNone' + str(i) + '.pth'
-        attacked_model_params_path = '../trained_model/' + data_name + '_' + model_name + '_' + 'PGD' \
-                                     + '_train' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
+        # 普通模型直接存储的路径
+        attacked_model_params_path = '../savemodel/' + data_name + '_' + model_name \
+                                     + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
                                      '_lr' + str(lr) + '_seedNone' + str(i) + '.pth'
+
+        # 对抗样本训练后的路径
+        # attacked_model_params_path = '../trained_model/' + data_name + '_' + model_name + '_' + 'PGD' \
+        #                              + '_train' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
+        #                              '_lr' + str(lr) + '_seedNone' + str(i) + '.pth'
 
         # attacked_model_params_path = '../trades_trained_model/CiFar10_ResNet_Trades_train_bz128_ep100_lr0
         # .01_seedNone1.pth'
@@ -76,13 +78,15 @@ def noise_attack(noise_name, data_name, model_name,
                 _, pred = torch.max(init_outputs, 1)
 
                 total_samples += init_outputs.shape[0]
-                # 生成PGD噪声
+                # 生成PGD噪声 默认20步长攻击
                 if noise_name == 'PGD':
                     iters = generate_pgd_noise(attacked_model, images, labels, criterion, device,
                                                epsilon=epsilon, num_iter=20, minv=0, maxv=1)
+                # BIM噪声
                 elif noise_name == 'BIM':
                     iters = generate_bim_noise(attacked_model, images, labels, criterion, device,
                                                epsilon=epsilon, iters=5, minv=0, maxv=1)
+                # FGSM攻击噪声
                 elif noise_name == 'FGSM':
                     iters = generate_fgsm_noise(attacked_model, images, labels, criterion, device,
                                                 epsilon=epsilon, minv=0, maxv=1)
