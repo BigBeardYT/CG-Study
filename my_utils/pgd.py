@@ -1,5 +1,5 @@
 import torch
-from RgNormResNet_3.my_utils.fgsm import *
+from my_utils.fgsm import *
 
 
 def iter_on_advimage(model, images, adv_images, labels, criterion, device, epsilon=0.01, iters = 5, minv = 0, maxv = 1):

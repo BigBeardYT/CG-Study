@@ -5,7 +5,7 @@ from my_utils.load_datasets import get_datasets
 device = 'cuda'
 
 # 加载模型
-model_name = 'IsingLeNet'
+model_name = 'LeNet'
 # 数据集
 data_name = 'MNIST'
 num_classes = 10
