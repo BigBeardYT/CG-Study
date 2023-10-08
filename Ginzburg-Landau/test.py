@@ -65,7 +65,8 @@ for epoch in range(num_epochs):
 
         # 前向传播
         outputs = model(images)
-        _, pred = torch.max(outputs, 1)
+        # _, pred = torch.max(outputs, 1)
+
 
         # 计算损失
         loss = custom_loss(outputs, labels, model)
@@ -76,5 +77,4 @@ for epoch in range(num_epochs):
         optimizer.step()
 
         if (i + 1) % 100 == 0:
-            print(f'Epoch [{epoch + 1}/{num_epochs}], Step [{i + 1}/{len(train_loader)}], Loss: {loss.item():.4f}, '
-                  f'Predict: {pred / labels.shape[0]}')
+            print(f'Epoch [{epoch + 1}/{num_epochs}], Step [{i + 1}/{len(train_loader)}], Loss: {loss.item():.4f}')
