@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 from my_utils.load_models import get_model
 from my_utils.pgd import generate_pgd_noise
+import torch.nn.functional as F
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -26,10 +27,11 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
     for i in range(start, end):
 
         print(f'第{i}次训练, 模型: {model_name}, 数据集: {data_name}')
-        # 训练
+        train_acc_lst, valid_acc_lst = [], []
+        train_loss_lst, valid_loss_lst = [], []
         best_acc = 0.0
         for epoch in range(num_epochs):
-            model.train()
+            model.train()   # 转换成训练模式
             for idx, (images, labels) in enumerate(train_loader):
                 images = images.to(device)
                 labels = labels.to(device)
@@ -39,7 +41,7 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
                 correct_pred = (pred == labels).sum()
                 acc = correct_pred / labels.shape[0]
                 # 计算损失
-                loss = custom_loss(outputs, images, labels, model, epsilon=0.3)
+                loss = custom_loss(outputs, images, labels, model, epsilon=0.1)
 
                 # 反向传播和优化
                 optimizer.zero_grad()
@@ -53,22 +55,21 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
             # 模型测试
             model.eval()
             with torch.no_grad():
-                for images, labels in test_loader:
-                    images, labels = images.to(device), labels.to(device)
-                    outputs = model(images)
-                    _, pred = torch.max(outputs, 1)
-                    correct_pred = torch.sum(pred == labels)
-                    acc = correct_pred / labels.shape[0]
+                # 训练精度、训练损失以及测试的精度和损失
+                train_acc, train_loss = compute_accuracy_and_loss(model, train_loader, model_name, device=device)
+                valid_acc, valid_loss = compute_accuracy_and_loss(model, test_loader, model_name, device=device)
+                train_acc_lst.append(train_acc)
+                valid_acc_lst.append(valid_acc)
+                valid_loss_lst.append(valid_loss)
+                print(f'Epoch: {epoch + 1:03d}/{num_epochs:03d} Train Acc.: {train_acc:.2f}%'
+                      f' | Validation Acc.: {valid_acc:.2f}%')
 
-                print('Epoch: [{}/{}], Test_Acc: {:.4f}'.format(epoch+1, num_epochs, acc.item()))
-
-                if acc.item() > best_acc and epoch > num_epochs*0.5:
-                    best_acc = acc.item()
-                    # 存储模型
-                    best_model_params_path = '../savemodel/' + save_name + '_bz' + str(batch_size) + '_ep' + \
-                                             str(num_epochs) + '_lr' + str(learning_rate) + '_seedNone' + str(i) \
-                                             + '.pth'
-                    torch.save(model.state_dict(), best_model_params_path)
+            if valid_acc > best_acc and epoch > num_epochs*0.5:
+                best_acc = valid_acc
+                # 存储模型
+                best_model_params_path = '../savemodel/' + save_name + '_bz' + str(batch_size) + '_ep' + str(num_epochs)\
+                                         + '_lr' + str(learning_rate) + '_seedNone' + str(i) + '.pth'
+                torch.save(model.state_dict(), best_model_params_path)
 
 
 # 定义自定义的损失函数
@@ -90,8 +91,7 @@ def custom_loss(outputs, images, labels, model, epsilon=0.3, alpha=1.0, beta=1.0
     gen_criterion = nn.CrossEntropyLoss()
 
     # 生成PGD噪声 默认20步长攻击
-    iters = generate_pgd_noise(model, images, labels, adv_criterion, device,
-                                        epsilon=epsilon, num_iter=20, minv=0, maxv=1)
+    iters = generate_pgd_noise(model, images, labels, adv_criterion, device, epsilon, num_iter=20, minv=0, maxv=1)
     # 攻击之后的样本
     eta, adv_images = iters
     # 将对抗样本进行重新训练
@@ -104,4 +104,21 @@ def custom_loss(outputs, images, labels, model, epsilon=0.3, alpha=1.0, beta=1.0
     # 总损失
     total_loss = alpha * robustness_loss + beta * generalization_loss
     return total_loss
+
+
+# 计算精确度和损失
+def compute_accuracy_and_loss(model, data_loader, model_name, device):
+    correct_pred, num_examples = 0, 0
+    cross_entropy = 0.
+    for i, (features, targets) in enumerate(data_loader):
+        features, targets = features.to(device), targets.to(device)
+        outputs = model(features)
+
+        # predicts = F.softmax(outputs, dim=1)
+        cross_entropy += F.cross_entropy(outputs, targets).item()
+        _, predicted_labels = torch.max(outputs, 1)
+        num_examples += targets.size(0)
+        correct_pred += (predicted_labels == targets).sum()
+    return correct_pred.float() / num_examples * 100, cross_entropy / num_examples
+
 
