@@ -33,7 +33,6 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
             for idx, (images, labels) in enumerate(train_loader):
                 images = images.to(device)
                 labels = labels.to(device)
-
                 # 前向传播
                 outputs = model(images)
                 _, pred = torch.max(outputs, 1)
@@ -75,7 +74,6 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
 # 定义自定义的损失函数
 def custom_loss(outputs, images, labels, model, epsilon=0.3, alpha=1.0, beta=1.0):
     """
-
     :param outputs: 输出
     :param images: 原始图像输入
     :param labels: 标签
@@ -85,7 +83,7 @@ def custom_loss(outputs, images, labels, model, epsilon=0.3, alpha=1.0, beta=1.0
     :param beta: 泛化损失的参数
     :return:
     """
-    # 鲁棒性损失：为简单起见，我们使用模型的 L2 范数，但更复杂的度量也可以使用，但在实际应用中，应使用对抗损失
+    # 鲁棒性损失：为简单起见，可以先使用模型的L2范数，或者更复杂的度量，但在实际应用中，应使用对抗损失
     # robustness_loss = torch.norm(torch.stack([torch.norm(p) for p in model.parameters()]))
     # robustness_loss = nn.CrossEntropyLoss()(outputs, targets)
     adv_criterion = nn.CrossEntropyLoss()
@@ -100,7 +98,6 @@ def custom_loss(outputs, images, labels, model, epsilon=0.3, alpha=1.0, beta=1.0
     adv_outputs = model(adv_images)
     # 计算对抗损失
     robustness_loss = adv_criterion(adv_outputs, labels)
-
     # 泛化性损失：使用交叉熵损失作为示例
     generalization_loss = gen_criterion(outputs, labels)
 

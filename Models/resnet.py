@@ -5,7 +5,7 @@ import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 import torchvision
-import basic_models
+from Models import basic_models
 
 
 class BasicBlock(nn.Module):
@@ -333,6 +333,7 @@ def SparseResNet152(relu=False, sparsities=[0.5, 0.4, 0.3, 0.2], sparse_func='re
 
 def SparseResNet152_ImageNet(relu=False, sparsities=[0.5, 0.4, 0.3, 0.2], sparse_func='reg', bias=False):
     return SparseResNet_ImageNet(SparseBottleneck, [3, 8, 36, 3], sparsities, sparse_func=sparse_func, bias=bias)
+
 
 ########### End resnet related ##################
 
