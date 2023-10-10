@@ -31,7 +31,8 @@ for i in range(1, 3):
         total_samples += outputs.shape[0]
         total_correct += torch.sum(pred == labels)
 
-    print('预测准确率: {} / {} = {:.2f}'.format(total_correct, total_samples, (total_correct / total_samples)*100))
+    print('第{}次预测, 模型路径: {}, 预测准确率: {} / {} = {:.2f}'.format(
+        i, model_path, total_correct, total_samples, (total_correct / total_samples)*100))
 
 
 

@@ -1,0 +1,2 @@
+第1次预测, 模型路径: ../savemodel/MNIST_GinzburgLandau_bz32_ep5_lr0.01_seedNone1.pth, 预测准确率: 9860 / 10000 = 98.60
+第2次预测, 模型路径: ../savemodel/MNIST_GinzburgLandau_bz32_ep5_lr0.01_seedNone2.pth, 预测准确率: 9903 / 10000 = 99.03

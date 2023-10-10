@@ -21,10 +21,3 @@ Epsilon: 0.25	Test Accuracy = 9643 / 10016 = 96.28
 Epsilon: 0.3	Test Accuracy = 9566 / 10016 = 95.51
 
 
-第1次预测, 模型: LeNet, 数据集: Mnist
-模型参数所在位置: ../savemodel/Mnist_GinzburgLandau_bz32_ep5_lr0.01_seedNone1.pth
-预测准确率为: 9860 / 10000 = 98.60
-第2次预测, 模型: LeNet, 数据集: Mnist
-模型参数所在位置: ../savemodel/Mnist_GinzburgLandau_bz32_ep5_lr0.01_seedNone2.pth
-预测准确率为: 9903 / 10000 = 99.03
-
