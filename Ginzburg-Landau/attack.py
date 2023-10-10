@@ -37,7 +37,7 @@ batch_size = 32
 num_epochs = 5
 # 攻击方法
 noise_name = 'PGD'
-for i in range(1, 2):
+for i in range(1, 3):
     # 模型对抗攻击
     print('第{}次攻击, 模型: {}, 数据集: {}, 攻击方式: {}'.format(i, model_name, data_name, noise_name))
     # 加载模型

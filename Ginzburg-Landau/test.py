@@ -96,7 +96,7 @@ for epoch in range(num_epochs):
             best_acc = acc.item()
             # 存储模型
             best_model_params_path = '../savemodel/' + save_name + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
-                                     '_lr' + str(learning_rate) + 'seedNone2' + '.pth'
+                                     '_lr' + str(learning_rate) + '_seedNone2' + '.pth'
             torch.save(model.state_dict(), best_model_params_path)
 
 

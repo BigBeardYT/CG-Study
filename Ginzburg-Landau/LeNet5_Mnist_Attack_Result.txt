@@ -1,11 +1,22 @@
-当前日期为: 2023-10-10, 时间: 11:12:35
-第1次攻击, 模型 LeNet, 数据集 MNIST
+当前日期为: 2023-10-10, 时间: 15:57:35
+第1次攻击, 模型: LeNet, 数据集: MNIST, 攻击方式: PGD
 模型参数所在位置
 ../savemodel/MNIST_GinzburgLandau_bz32_ep5_lr0.01_seedNone1.pth
 Epsilon: 0.01	Test Accuracy = 9744 / 10016 = 97.28
-Epsilon: 0.05	Test Accuracy = 9667 / 10016 = 96.52
-Epsilon: 0.1	Test Accuracy = 9524 / 10016 = 95.09
-Epsilon: 0.2	Test Accuracy = 9161 / 10016 = 91.46
-Epsilon: 0.25	Test Accuracy = 8901 / 10016 = 88.87
-Epsilon: 0.3	Test Accuracy = 8591 / 10016 = 85.77
+Epsilon: 0.05	Test Accuracy = 9670 / 10016 = 96.55
+Epsilon: 0.1	Test Accuracy = 9527 / 10016 = 95.12
+Epsilon: 0.2	Test Accuracy = 9160 / 10016 = 91.45
+Epsilon: 0.25	Test Accuracy = 8894 / 10016 = 88.80
+Epsilon: 0.3	Test Accuracy = 8542 / 10016 = 85.28
+
+==== 两个损失函数的模型 ====
+第2次攻击, 模型: LeNet, 数据集: MNIST, 攻击方式: PGD
+模型参数所在位置
+../savemodel/MNIST_GinzburgLandau_bz32_ep5_lr0.01_seedNone2.pth
+Epsilon: 0.01	Test Accuracy = 9879 / 10016 = 98.63
+Epsilon: 0.05	Test Accuracy = 9849 / 10016 = 98.33
+Epsilon: 0.1	Test Accuracy = 9808 / 10016 = 97.92
+Epsilon: 0.2	Test Accuracy = 9702 / 10016 = 96.87
+Epsilon: 0.25	Test Accuracy = 9643 / 10016 = 96.28
+Epsilon: 0.3	Test Accuracy = 9566 / 10016 = 95.51
 
