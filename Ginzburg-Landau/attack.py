@@ -12,15 +12,13 @@ from LeNet5 import LeNet5
 # 导包，自定义的攻击函数
 from my_utils.adversarial_attack import noise_attack
 
-# 模型（三通道的图，应该加载不同的模型）
-Ising_LeNet_model_name = 'IsingLeNet'
-LeNet_model_name = 'LeNet'
+
 """ ######## 以下参数训练之前手动设置 ######### """
 attacked_batch_size = 32
 attacked_num_epochs = 10
 lr = 0.01
 data_name = 'MNIST'
-model_name = LeNet_model_name
+model_name = 'LeNet'
 num_classes = 10
 """ ######## 以上参数训练之前手动设置 ######### """
 
@@ -41,7 +39,7 @@ num_epochs = 5
 noise_name = 'PGD'
 for i in range(1, 2):
     # 模型对抗攻击
-    print('第{}次攻击, 模型 {}, 数据集 {}'.format(i, model_name, data_name))
+    print('第{}次攻击, 模型: {}, 数据集: {}, 攻击方式: {}'.format(i, model_name, data_name, noise_name))
     # 加载模型
     # attacked_model = get_model(model_name, in_features=in_features, num_classes=num_classes).to(device)
     attacked_model = LeNet5().to(device)
