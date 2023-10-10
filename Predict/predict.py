@@ -3,7 +3,7 @@ sys.path.append("..")
 import torch
 from my_utils.load_models import get_model
 from my_utils.load_datasets import get_datasets
-
+from LeNet5 import LeNet5
 
 device = 'cuda'
 # 数据集
@@ -18,8 +18,8 @@ LeNet_model_name = 'LeNet'
 
 # 预测，加载对应数据集 -> 加载模型 -> 预测
 """ ######## 以下参数 手动设置 ######### """
-batch_size = 128
-num_epochs = 10
+batch_size = 32
+num_epochs = 5
 lr = 0.01
 # 数据集
 data_name = Mnist_data_name
@@ -52,6 +52,8 @@ for i in range(1, 3):
     attacked_model_params_path = '../savemodel/' + data_name + '_' + model_name \
                                  + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
                                  '_lr' + str(lr) + '_seedNone' + str(i) + '.pth'
+
+
     print('模型参数所在位置: {}'.format(attacked_model_params_path))
 
     # 加载参数
