@@ -1,14 +1,10 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torchvision
-import torchvision.transforms as transforms
-import torch.nn.functional as F
-
 
 # 定义 LeNet-5 模型
 from my_utils.load_datasets import get_datasets
-from LeNet5 import LeNet5
+from models.LeNet5 import LeNet5
 
 
 # 定义自定义的损失函数

@@ -1,5 +1,5 @@
 import torch
-from LeNet5 import LeNet5
+from models.LeNet5 import LeNet5
 from my_utils.load_datasets import get_datasets
 
 
