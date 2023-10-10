@@ -1,0 +1,11 @@
+当前日期为: 2023-10-10, 时间: 11:12:35
+第1次攻击, 模型 LeNet, 数据集 MNIST
+模型参数所在位置
+../savemodel/MNIST_GinzburgLandau_bz32_ep5_lr0.01_seedNone1.pth
+Epsilon: 0.01	Test Accuracy = 9744 / 10016 = 97.28
+Epsilon: 0.05	Test Accuracy = 9667 / 10016 = 96.52
+Epsilon: 0.1	Test Accuracy = 9524 / 10016 = 95.09
+Epsilon: 0.2	Test Accuracy = 9161 / 10016 = 91.46
+Epsilon: 0.25	Test Accuracy = 8901 / 10016 = 88.87
+Epsilon: 0.3	Test Accuracy = 8591 / 10016 = 85.77
+
