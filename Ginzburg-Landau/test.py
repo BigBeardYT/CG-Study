@@ -7,10 +7,10 @@ from my_utils.load_datasets import get_datasets
 from models.LeNet5 import LeNet5
 
 
-# 定义自定义的损失函数
+
 from my_utils.pgd import generate_pgd_noise
 
-
+# 定义自定义的损失函数
 def custom_loss(outputs, images, targets, model, alpha=1.0, beta=1.0):
     # 鲁棒性损失：为简单起见，我们使用模型的 L2 范数，但更复杂的度量也可以使用，但在实际应用中，应使用对抗损失
     # robustness_loss = torch.norm(torch.stack([torch.norm(p) for p in model.parameters()]))

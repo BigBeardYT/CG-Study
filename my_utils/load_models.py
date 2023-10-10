@@ -4,7 +4,8 @@ import sys
 sys.path.append("..")
 from MonteCarloPooling.models.MC_LeNet import MC_LeNet
 from IsingModel.IsingLayer import IsingLeNet
-from Models.LeNet import LeNet
+from Models.LeNet5 import LeNet5
+from Models.alexnet import AlexNet
 
 
 def get_model(model_name, in_features=1, num_classes=10):
@@ -14,7 +15,9 @@ def get_model(model_name, in_features=1, num_classes=10):
     if model_name == 'IsingLeNet':
         return IsingLeNet()
     if model_name == 'LeNet':
-        return LeNet()
+        return LeNet5()
+    elif model_name == 'AlexNet':
+        return AlexNet()
 
     else:
         print("输入的模型有误!!!")
