@@ -12,13 +12,28 @@ from LeNet5 import LeNet5
 
 
 # 定义自定义的损失函数
-def custom_loss(outputs, targets, model, alpha=1.0, beta=1.0):
+from my_utils.pgd import generate_pgd_noise
+
+
+def custom_loss(outputs, images, targets, model, alpha=1.0, beta=1.0):
     # 鲁棒性损失：为简单起见，我们使用模型的 L2 范数，但更复杂的度量也可以使用，但在实际应用中，应使用对抗损失
     # robustness_loss = torch.norm(torch.stack([torch.norm(p) for p in model.parameters()]))
-    robustness_loss = nn.CrossEntropyLoss()(outputs, targets)
+    # robustness_loss = nn.CrossEntropyLoss()(outputs, targets)
+    adv_criterion = nn.CrossEntropyLoss()
+    gen_criterion = nn.CrossEntropyLoss()
+
+    # 生成PGD噪声 默认20步长攻击
+    iters = generate_pgd_noise(model, images, labels, adv_criterion, device,
+                                        epsilon=0.3, num_iter=20, minv=0, maxv=1)
+    # 攻击之后的样本
+    eta, adv_images = iters
+    # 将对抗样本进行重新训练
+    adv_outputs = model(adv_images)
+    # 计算对抗损失
+    robustness_loss = adv_criterion(adv_outputs, labels)
 
     # 泛化性损失：使用交叉熵损失作为示例
-    generalization_loss = nn.CrossEntropyLoss()(outputs, targets)
+    generalization_loss = gen_criterion(outputs, targets)
 
     # 总损失
     total_loss = alpha * robustness_loss + beta * generalization_loss
@@ -54,7 +69,7 @@ for epoch in range(num_epochs):
         correct_pred = (pred == labels).sum()
         acc = correct_pred / labels.shape[0]
         # 计算损失
-        loss = custom_loss(outputs, labels, model)
+        loss = custom_loss(outputs, images, labels, model)
 
         # 反向传播和优化
         optimizer.zero_grad()
