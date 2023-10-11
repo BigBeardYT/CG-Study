@@ -1,19 +1,21 @@
 import torch
 from models.LeNet5 import LeNet5
+from Models.resnet import ResNet18
 from my_utils.load_datasets import get_datasets
 
 
-batch_size = 32
-num_epochs = 5
+batch_size = 128
+num_epochs = 100
 learning_rate = 0.01
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-data_name = 'MNIST'
+data_name = 'CiFar10'
+model_name = 'ResNet18'
 train_dataset, test_dataset, train_loader, test_loader = get_datasets(batch_size=batch_size, data_name=data_name)
 
-for i in range(1, 3):
+for i in range(1, 2):
     # 读取模型
-    predicted_model = LeNet5().to(device)
-    model_path = '../savemodel/' + data_name + '_GinzburgLandau' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
+    predicted_model = ResNet18().to(device)
+    model_path = 'D:/Python_CG_Project/Study_Stage/savemodel/' + data_name + '_' + model_name + '_GinzburgLandau' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
                  '_lr' + str(learning_rate) + '_seedNone' + str(i) + '.pth'
     # 加载参数
     predicted_model.load_state_dict(torch.load(model_path))

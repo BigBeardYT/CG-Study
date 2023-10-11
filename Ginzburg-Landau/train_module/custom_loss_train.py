@@ -27,8 +27,7 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
     for i in range(start, end):
 
         print(f'第{i}次训练, 模型: {model_name}, 数据集: {data_name}')
-        train_acc_lst, valid_acc_lst = [], []
-        train_loss_lst, valid_loss_lst = [], []
+
         best_acc = 0.0
         for epoch in range(num_epochs):
             model.train()   # 转换成训练模式
@@ -39,7 +38,7 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
                 outputs = model(images)
                 _, pred = torch.max(outputs, 1)
                 correct_pred = (pred == labels).sum()
-                acc = correct_pred / labels.shape[0]
+                train_acc = correct_pred / labels.shape[0]
                 # 计算损失
                 loss = custom_loss(outputs, images, labels, model, epsilon=0.1)
 
@@ -48,28 +47,39 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
                 loss.backward()
                 optimizer.step()
 
-                if (i + 1) % 100 == 0:
+                if (idx + 1) % 100 == 0:
                     print(f'Epoch [{epoch + 1}/{num_epochs}], Step [{idx + 1}/{len(train_loader)}], Loss: {loss.item():.4f}, '
-                          f'Accuracy: {acc.item():.4f}')
+                          f'Accuracy: {train_acc.item():.4f}')
 
             # 模型测试
             model.eval()
             with torch.no_grad():
                 # 训练精度、训练损失以及测试的精度和损失
-                train_acc, train_loss = compute_accuracy_and_loss(model, train_loader, model_name, device=device)
-                valid_acc, valid_loss = compute_accuracy_and_loss(model, test_loader, model_name, device=device)
-                train_acc_lst.append(train_acc)
-                valid_acc_lst.append(valid_acc)
-                valid_loss_lst.append(valid_loss)
-                print(f'Epoch: {epoch + 1:03d}/{num_epochs:03d} Train Acc.: {train_acc:.2f}%'
+                for images, labels in test_loader:
+                    images = images.to(device)
+                    labels = labels.to(device)
+                    valid_outputs = model(images)
+                    _, valid_pred = torch.max(valid_outputs, 1)
+                    correct_valid_pred = (valid_pred == labels).sum()
+                    valid_acc = correct_valid_pred / labels.shape[0]
+
+                print(f'Epoch: {epoch + 1:03d}/{num_epochs:03d} Train Acc.: {train_acc.item():.2f}%'
                       f' | Validation Acc.: {valid_acc:.2f}%')
 
-            if valid_acc > best_acc and epoch > num_epochs*0.5:
-                best_acc = valid_acc
-                # 存储模型
-                best_model_params_path = '../savemodel/' + save_name + '_bz' + str(batch_size) + '_ep' + str(num_epochs)\
-                                         + '_lr' + str(learning_rate) + '_seedNone' + str(i) + '.pth'
-                torch.save(model.state_dict(), best_model_params_path)
+            # if valid_acc > best_acc:
+            print("Saving Model ... ")
+            # best_acc = valid_acc
+            # 存储模型
+            best_model_params_path = 'D:/Python_CG_Project/Study_Stage/savemodel/' + save_name + '_bz' + str(
+                batch_size) + '_ep' + str(num_epochs) \
+                                     + '_lr' + str(learning_rate) + '_seedNone' + str(i) + '.pth'
+            torch.save(model.state_dict(), best_model_params_path)
+
+            # 动态更改学习率
+            if (epoch + 1) == (int)(num_epochs * 0.75) or (epoch + 1) == (int)(num_epochs * 0.90):
+                for params_group in optimizer.param_groups:
+                    params_group['lr'] *= 0.1
+                    print('更改学习率为{}:'.format(params_group['lr']))
 
 
 # 定义自定义的损失函数
@@ -114,8 +124,6 @@ def compute_accuracy_and_loss(model, data_loader, model_name, device):
         features, targets = features.to(device), targets.to(device)
         outputs = model(features)
 
-        # predicts = F.softmax(outputs, dim=1)
-        cross_entropy += F.cross_entropy(outputs, targets).item()
         _, predicted_labels = torch.max(outputs, 1)
         num_examples += targets.size(0)
         correct_pred += (predicted_labels == targets).sum()

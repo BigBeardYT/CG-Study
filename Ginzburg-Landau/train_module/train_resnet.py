@@ -10,7 +10,7 @@ model_name = 'ResNet18'
 data_name = 'CiFar10'
 num_classes = 10
 batch_size = 128
-num_epochs = 100
+num_epochs = 30
 lr = 0.01
 
 train_datasets, test_datasets, train_loader, test_loader = get_datasets(batch_size=batch_size, data_name=data_name)
@@ -19,5 +19,5 @@ train_datasets, test_datasets, train_loader, test_loader = get_datasets(batch_si
 my_custom_loss_train(data_name, model_name, num_classes,
          train_loader, test_loader,
          batch_size, num_epochs, lr,
-         1, 3)
+         2, 3)
 
