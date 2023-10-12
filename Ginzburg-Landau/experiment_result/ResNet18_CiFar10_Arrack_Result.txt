@@ -1,0 +1,9 @@
+第2次攻击, 模型: ResNet18, 数据集: CiFar10, 攻击方式: PGD
+模型参数所在位置
+D:/Python_CG_Project/Study_Stage/savemodel/CiFar10_ResNet18_GinzburgLandau_bz128_ep30_lr0.01_seedNone2.pth
+Epsilon: 0.01	Test Accuracy = 7243 / 10016 = 72.31
+Epsilon: 0.05	Test Accuracy = 6020 / 10016 = 60.10
+Epsilon: 0.1	Test Accuracy = 4693 / 10016 = 46.86
+Epsilon: 0.2	Test Accuracy = 2782 / 10016 = 27.78
+Epsilon: 0.25	Test Accuracy = 2341 / 10016 = 23.37
+Epsilon: 0.3	Test Accuracy = 2045 / 10016 = 20.42
