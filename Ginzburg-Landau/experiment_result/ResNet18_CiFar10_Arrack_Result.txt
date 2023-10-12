@@ -7,3 +7,16 @@ Epsilon: 0.1	Test Accuracy = 4693 / 10016 = 46.86
 Epsilon: 0.2	Test Accuracy = 2782 / 10016 = 27.78
 Epsilon: 0.25	Test Accuracy = 2341 / 10016 = 23.37
 Epsilon: 0.3	Test Accuracy = 2045 / 10016 = 20.42
+
+模型参数所在位置
+../trained_model/CiFar10_FSRResNet_PGD_train_bz128_ep30_lr0.01_seedNone1.pth
+Epsilon: 0.01	Test Accuracy = 9994 / 10112 = 98.83
+Epsilon: 0.05	Test Accuracy = 8164 / 10112 = 80.74
+Epsilon: 0.1	Test Accuracy = 4241 / 10112 = 41.94
+Epsilon: 0.15	Test Accuracy = 2195 / 10112 = 21.71
+Epsilon: 0.2	Test Accuracy = 1183 / 10112 = 11.70
+Epsilon: 0.25	Test Accuracy = 663 / 10112 = 6.56
+Epsilon: 0.3	Test Accuracy = 427 / 10112 = 4.22
+
+
+
