@@ -60,11 +60,11 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
                     labels = labels.to(device)
                     valid_outputs = model(images)
                     _, valid_pred = torch.max(valid_outputs, 1)
-                    correct_valid_pred = (valid_pred == labels).sum()
-                    valid_acc = correct_valid_pred / labels.shape[0]
+                    correct_valid_pred = correct_valid_pred + (valid_pred == labels).sum()
 
-                print(f'Epoch: {epoch + 1:03d}/{num_epochs:03d} Train Acc.: {train_acc.item():.2f}%'
-                      f' | Validation Acc.: {valid_acc:.2f}%')
+                valid_acc = correct_valid_pred / len(test_loader)
+                print(f'Epoch: {epoch + 1:03d}/{num_epochs:03d} Train Acc: {train_acc.item():.2f}%'
+                      f' | Validation Acc: {valid_acc:.2f}%')
 
             # if valid_acc > best_acc:
             print("Saving Model ... ")
