@@ -25,7 +25,7 @@ epsilons = [0.1]
 # 损失函数
 criterion = torch.nn.CrossEntropyLoss()
 
-adv_train_epochs = 10
+adv_train_epochs = 30
 
 
 def trades_adv_train(data_name, model_name,

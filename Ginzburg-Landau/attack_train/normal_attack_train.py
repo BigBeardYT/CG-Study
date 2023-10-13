@@ -28,4 +28,4 @@ noise_name = 'PGD'
 adversarial_noise_train(noise_name, data_name, model_name,
                         test_loader, num_classes, lr,
                         attacked_batch_size, attacked_num_epochs,
-                        1, 2)
+                        2, 3)
