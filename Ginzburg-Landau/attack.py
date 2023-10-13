@@ -47,14 +47,14 @@ for i in range(2, 3):
     attacked_model = get_model(model_name, in_features=in_features, num_classes=num_classes).to(device)
     # attacked_model = LeNet5().to(device)
     # 普通模型直接存储的路径
-    attacked_model_params_path = 'D:/Python_CG_Project/Study_Stage/savemodel/' + data_name + '_' + model_name + '_' + \
-                                 'GinzburgLandau' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
-                                 '_lr' + str(lr) + '_seedNone' + str(i) + '.pth'
+    # attacked_model_params_path = 'D:/Python_CG_Project/Study_Stage/savemodel/' + data_name + '_' + model_name + '_' + \
+    #                              'GinzburgLandau' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
+    #                              '_lr' + str(lr) + '_seedNone' + str(i) + '.pth'
 
     # 对抗样本训练后的路径
-    # attacked_model_params_path = '../trained_model/' + data_name + '_' + model_name + '_' + 'PGD' \
-    #                              + '_train' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
-    #                              '_lr' + str(lr) + '_seedNone' + str(i) + '.pth'
+    attacked_model_params_path = './trained_model/' + data_name + '_' + model_name + '_' + 'PGD' \
+                                 + '_train' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
+                                 '_lr' + str(lr) + '_seedNone' + str(i) + '.pth'
 
     # attacked_model_params_path = '../trades_trained_model/CiFar10_ResNet_Trades_train_bz128_ep100_lr0
     # .01_seedNone1.pth'

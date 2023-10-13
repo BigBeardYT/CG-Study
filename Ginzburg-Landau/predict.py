@@ -12,11 +12,19 @@ data_name = 'CiFar10'
 model_name = 'ResNet18'
 train_dataset, test_dataset, train_loader, test_loader = get_datasets(batch_size=batch_size, data_name=data_name)
 
-for i in range(2, 3):
+for i in range(1, 2):
     # 读取模型
     predicted_model = ResNet18().to(device)
-    model_path = 'D:/Python_CG_Project/Study_Stage/savemodel/' + data_name + '_' + model_name + '_GinzburgLandau' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
-                 '_lr' + str(learning_rate) + '_seedNone' + str(i) + '.pth'
+    # GL模型
+    # model_path = 'D:/Python_CG_Project/Study_Stage/savemodel/' + data_name + '_' + model_name + '_GinzburgLandau' + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
+    #              '_lr' + str(learning_rate) + '_seedNone' + str(i) + '.pth'
+    # 普通模型
+    model_path = 'D:/Python_CG_Project/Study_Stage/savemodel/' + data_name + '_' + model_name + '_bz' + str(
+        batch_size) + '_ep' + str(num_epochs) + '_lr' + str(learning_rate) + '_seedNone' + str(i) + '.pth'
+    # 对抗训练之后
+    # model_path = 'D:/Python_CG_Project/Study_Stage/Ginzburg-Landau/trained_model/' + data_name + '_' + model_name + \
+    #              '_PGD_train_bz' + str(batch_size) + '_ep' + str(num_epochs) + '_lr' + str(learning_rate) + '_seedNone' \
+    #              + str(i) + '.pth'
     # 加载参数
     predicted_model.load_state_dict(torch.load(model_path))
 
