@@ -66,7 +66,7 @@ def my_train(data_name, model_name, num_classes, train_loader, test_loader,
                 print('Saving Model...')
                 best_acc = valid_acc
                 # 最好模型参数的存储路径
-                best_model_params_path = '../savemodel/' + save_name + '_bz' \
+                best_model_params_path = 'D:/Python_CG_Project/Study_Stage/savemodel/' + save_name + '_bz' \
                                          + str(batch_size) + '_ep' + str(num_epochs) \
                                          + '_lr' + str(lr) + '_seedNone' + str(i) + '.pth'
                 torch.save(model.state_dict(), best_model_params_path)
@@ -81,7 +81,7 @@ def my_train(data_name, model_name, num_classes, train_loader, test_loader,
         plt.legend()
         plt.title(save_name + '_train_loss')
         # 存储图片
-        plt.savefig('../saveimage/' + save_name + '_bz' + str(batch_size)
+        plt.savefig('D:/Python_CG_Project/Study_Stage/saveimage/' + save_name + '_bz' + str(batch_size)
                     + '_ep' + str(num_epochs) + '_lr' + str(lr)
                     + '_seedNone' + str(i) + '_trainloss' + '.png', dpi=600)
         # plt.show()

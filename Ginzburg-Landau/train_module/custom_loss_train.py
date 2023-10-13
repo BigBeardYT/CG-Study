@@ -83,7 +83,7 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
 
 
 # 定义自定义的损失函数
-def custom_loss(outputs, images, labels, model, epsilon=0.3, alpha=1.0, beta=1.0):
+def custom_loss(outputs, images, labels, model, epsilon, alpha=1.0, beta=1.0):
     """
     :param outputs: 输出
     :param images: 原始图像输入

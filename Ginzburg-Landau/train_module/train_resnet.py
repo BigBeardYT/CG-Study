@@ -1,4 +1,5 @@
 from custom_loss_train import my_custom_loss_train
+from custom_normal_train import my_train
 from my_utils.load_datasets import get_datasets
 
 # 训练配置
@@ -15,9 +16,11 @@ lr = 0.01
 
 train_datasets, test_datasets, train_loader, test_loader = get_datasets(batch_size=batch_size, data_name=data_name)
 
-
-my_custom_loss_train(data_name, model_name, num_classes,
+my_train(data_name, model_name, num_classes,
          train_loader, test_loader,
-         batch_size, num_epochs, lr,
-         2, 3)
+         batch_size, num_epochs, lr, 1, 2)
+# my_custom_loss_train(data_name, model_name, num_classes,
+#          train_loader, test_loader,
+#          batch_size, num_epochs, lr,
+#          2, 3)
 
