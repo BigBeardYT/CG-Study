@@ -2,14 +2,14 @@ import sys
 
 import torch.nn
 
-from RgNormResNet_3.my_utils.fgsm import generate_fgsm_noise
+from my_utils.fgsm import generate_fgsm_noise
 
 sys.path.append("..")
 import torch.nn as nn
-from RgNormResNet_3.my_utils.pgd import *
-from RgNormResNet_3.my_utils.fgsm import *
-from RgNormResNet_3.my_utils.load_models import get_model
-from RgNormResNet_3.my_utils.trades import trades_loss
+from my_utils.pgd import *
+from my_utils.fgsm import *
+from my_utils.load_models import get_model
+from my_utils.trades import trades_loss
 # 导入datetime模块
 from datetime import datetime
 
@@ -21,7 +21,7 @@ print("当前日期为: {}, 时间: {}".format(now.date(), now.strftime("%H:%M:%
 
 device = 'cuda'
 # epsilons = [0.01, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
-epsilons = [2 / 255]
+epsilons = [0.1]
 # 损失函数
 criterion = torch.nn.CrossEntropyLoss()
 
@@ -110,10 +110,10 @@ def trades_adv_train(data_name, model_name,
                 torch.save(attacked_model.state_dict(), best_model_params_path)
 
 
-def noise_train(noise_name, data_name, model_name,
-                test_loader, num_classes, lr,
-                batch_size, num_epochs,
-                start, end):
+def adversarial_noise_train(noise_name, data_name, model_name,
+                            test_loader, num_classes, lr,
+                            batch_size, num_epochs,
+                            start, end):
     if noise_name == 'PGD':
         print('PGD-普通-对抗训练...')
     elif noise_name == 'BIM':
@@ -168,7 +168,7 @@ def noise_train(noise_name, data_name, model_name,
                     # 生成PGD噪声
                     if noise_name == 'PGD':
                         iters = generate_pgd_noise(attacked_model, images, labels, criterion, device,
-                                                   epsilon=epsilon, num_iter=10, minv=0, maxv=1)
+                                                   epsilon=epsilon, num_iter=20, minv=0, maxv=1)
                     elif noise_name == 'BIM':
                         iters = generate_bim_noise(attacked_model, images, labels, criterion, device,
                                                    epsilon=epsilon, iters=5, minv=0, maxv=1)
