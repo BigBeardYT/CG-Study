@@ -15,7 +15,7 @@ def get_model(model_name, in_features=1, num_classes=10):
         return MC_LeNet()
     if model_name == 'IsingLeNet':
         return IsingLeNet()
-    if model_name == 'LeNet':
+    if model_name == 'LeNet5':
         return LeNet5()
     elif model_name == 'AlexNet':
         return AlexNet(num_classes=num_classes, in_features=in_features)

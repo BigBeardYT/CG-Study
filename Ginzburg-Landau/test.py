@@ -6,9 +6,8 @@ import torch.optim as optim
 from my_utils.load_datasets import get_datasets
 from models.LeNet5 import LeNet5
 
-
-
 from my_utils.pgd import generate_pgd_noise
+
 
 # 定义自定义的损失函数
 def custom_loss(outputs, images, targets, model, alpha=1.0, beta=1.0):
@@ -20,7 +19,7 @@ def custom_loss(outputs, images, targets, model, alpha=1.0, beta=1.0):
 
     # 生成PGD噪声 默认20步长攻击
     iters = generate_pgd_noise(model, images, labels, adv_criterion, device,
-                                        epsilon=0.3, num_iter=20, minv=0, maxv=1)
+                               epsilon=2 / 255, num_iter=20, minv=0, maxv=1)
     # 攻击之后的样本
     eta, adv_images = iters
     # 将对抗样本进行重新训练
@@ -86,13 +85,11 @@ for epoch in range(num_epochs):
             correct_pred = torch.sum(pred == labels)
             acc = correct_pred / labels.shape[0]
 
-        print('Epoch: [{}/{}], Test_Acc: {:.4f}'.format(epoch+1, num_epochs, acc.item()))
+        print('Epoch: [{}/{}], Test_Acc: {:.4f}'.format(epoch + 1, num_epochs, acc.item()))
         save_name = 'MNIST_GinzburgLandau'
-        if acc.item() > best_acc and epoch > num_epochs*0.5:
+        if acc.item() > best_acc and epoch > num_epochs * 0.5:
             best_acc = acc.item()
             # 存储模型
             best_model_params_path = '../savemodel/' + save_name + '_bz' + str(batch_size) + '_ep' + str(num_epochs) + \
                                      '_lr' + str(learning_rate) + '_seedNone2' + '.pth'
             torch.save(model.state_dict(), best_model_params_path)
-
-

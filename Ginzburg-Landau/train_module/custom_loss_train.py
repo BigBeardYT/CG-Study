@@ -40,7 +40,7 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
                 correct_pred = (pred == labels).sum()
                 train_acc = correct_pred / labels.shape[0]
                 # 计算损失
-                loss = custom_loss(outputs, images, labels, model, epsilon=0.1)
+                loss = custom_loss(outputs, images, labels, model, epsilon=0.05)
 
                 # 反向传播和优化
                 optimizer.zero_grad()
@@ -55,6 +55,7 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
             model.eval()
             with torch.no_grad():
                 # 训练精度、训练损失以及测试的精度和损失
+                correct_valid_pred = 0
                 for images, labels in test_loader:
                     images = images.to(device)
                     labels = labels.to(device)
@@ -76,14 +77,14 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
             torch.save(model.state_dict(), best_model_params_path)
 
             # 动态更改学习率
-            if (epoch + 1) == (int)(num_epochs * 0.75) or (epoch + 1) == (int)(num_epochs * 0.90):
-                for params_group in optimizer.param_groups:
-                    params_group['lr'] *= 0.1
-                    print('更改学习率为{}:'.format(params_group['lr']))
+            # if (epoch + 1) == (int)(num_epochs * 0.75) or (epoch + 1) == (int)(num_epochs * 0.90):
+            #     for params_group in optimizer.param_groups:
+            #         params_group['lr'] *= 0.1
+            #         print('更改学习率为{}:'.format(params_group['lr']))
 
 
 # 定义自定义的损失函数
-def custom_loss(outputs, images, labels, model, epsilon, alpha=1.0, beta=1.0):
+def custom_loss(outputs, images, labels, model, epsilon, alpha=0.6, beta=0.4):
     """
     :param outputs: 输出
     :param images: 原始图像输入
