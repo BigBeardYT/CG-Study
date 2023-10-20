@@ -21,11 +21,11 @@ print("当前日期为: {}, 时间: {}".format(now.date(), now.strftime("%H:%M:%
 
 device = 'cuda'
 # epsilons = [0.01, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
-epsilons = [0.1]
+epsilons = [0.05]
 # 损失函数
 criterion = torch.nn.CrossEntropyLoss()
 
-adv_train_epochs = 30
+adv_train_epochs = 5
 
 
 def trades_adv_train(data_name, model_name,

@@ -16,8 +16,8 @@ from models.LeNet5 import LeNet5
 attacked_batch_size = 128
 attacked_num_epochs = 30
 lr = 0.01
-data_name = 'CiFar10'
-model_name = 'ResNet18'
+data_name = 'MNIST'
+model_name = 'LeNet5'
 num_classes = 10
 """ ######## 以上参数训练之前手动设置 ######### """
 # 第2次攻击, 模型: ResNet18, 数据集: CiFar10, 攻击方式: PGD
@@ -36,11 +36,11 @@ train_dataset, test_dataset, \
 epsilons = [0.01, 0.05, 0.1, 0.2, 0.25, 0.3]
 in_features = 1
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-batch_size = 128
-num_epochs = 30
+batch_size = 32
+num_epochs = 5
 # 攻击方法
 noise_name = 'PGD'
-for i in range(2, 3):
+for i in range(1, 3):
     # 模型对抗攻击
     print('第{}次攻击, 模型: {}, 数据集: {}, 攻击方式: {}'.format(i, model_name, data_name, noise_name))
     # 加载模型
