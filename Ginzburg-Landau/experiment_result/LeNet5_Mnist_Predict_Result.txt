@@ -3,8 +3,8 @@
 
 
 epsilon = 0.05
-第1次预测, 模型路径: D:/Python_CG_Project/Study_Stage/savemodel/MNIST_LeNet5_GinzburgLandau_bz32_ep5_lr0.01_seedNone1.pth, 预测准确率: 9891 / 10000 = 98.91
-第2次预测, 模型路径: D:/Python_CG_Project/Study_Stage/savemodel/MNIST_LeNet5_GinzburgLandau_bz32_ep5_lr0.01_seedNone2.pth, 预测准确率: 9909 / 10000 = 99.09
+第1次预测, 模型路径: savemodel/MNIST_LeNet5_GinzburgLandau_bz32_ep5_lr0.01_seedNone1.pth, 预测准确率: 9891 / 10000 = 98.91
+第2次预测, 模型路径: savemodel/MNIST_LeNet5_GinzburgLandau_bz32_ep5_lr0.01_seedNone2.pth, 预测准确率: 9909 / 10000 = 99.09
 
-第1次预测, 模型路径: D:/Python_CG_Project/Study_Stage/Ginzburg-Landau/trained_model/MNIST_LeNet5_PGD_train_bz32_ep5_lr0.01_seedNone1.pth, 预测准确率: 9986 / 10000 = 99.86
-第2次预测, 模型路径: D:/Python_CG_Project/Study_Stage/Ginzburg-Landau/trained_model/MNIST_LeNet5_PGD_train_bz32_ep5_lr0.01_seedNone2.pth, 预测准确率: 9989 / 10000 = 99.89
+第1次预测, 模型路径: trained_model/MNIST_LeNet5_PGD_train_bz32_ep5_lr0.01_seedNone1.pth, 预测准确率: 9986 / 10000 = 99.86
+第2次预测, 模型路径: trained_model/MNIST_LeNet5_PGD_train_bz32_ep5_lr0.01_seedNone2.pth, 预测准确率: 9989 / 10000 = 99.89
