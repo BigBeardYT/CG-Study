@@ -18,13 +18,13 @@ lr = 0.01
 train_datasets, test_datasets, train_loader, test_loader = get_datasets(batch_size=batch_size, data_name=data_name)
 
 # # 自定义训练
-my_custom_loss_train(data_name, model_name, num_classes,
-         train_loader, test_loader,
-         batch_size, num_epochs, lr, 0.1,
-         1, 3)
+# my_custom_loss_train(data_name, model_name, num_classes,
+#          train_loader, test_loader,
+#          batch_size, num_epochs, lr, 0.1,
+#          1, 4)
 
 # 正常训练
-# my_train(data_name, model_name, num_classes,
-#          train_loader, test_loader,
-#          batch_size, num_epochs, lr, 1, 3)
+my_train(data_name, model_name, num_classes,
+         train_loader, test_loader,
+         batch_size, num_epochs, lr, 1, 3)
 

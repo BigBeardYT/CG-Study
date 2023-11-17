@@ -61,4 +61,32 @@ Epsilon: 0.2	Test Accuracy = 9650 / 10016 = 96.35
 Epsilon: 0.25	Test Accuracy = 9542 / 10016 = 95.27
 Epsilon: 0.3	Test Accuracy = 9389 / 10016 = 93.74
 
+""" 双损失函数，10次训练，epsilon=0.1，a=0.618, b=0.382
+第1次攻击, 模型: LeNet5, 数据集: MNIST, 攻击方式: PGD
+模型参数所在位置
+D:/Python_CG_Project/Study_Stage/savemodel/MNIST_LeNet5_GinzburgLandau_bz32_ep10_lr0.01_seedNone1.pth
+Epsilon: 0.01	Test Accuracy = 9885 / 10016 = 98.69
+Epsilon: 0.05	Test Accuracy = 9849 / 10016 = 98.33
+Epsilon: 0.1	Test Accuracy = 9796 / 10016 = 97.80
+Epsilon: 0.2	Test Accuracy = 9675 / 10016 = 96.60
+Epsilon: 0.25	Test Accuracy = 9574 / 10016 = 95.59
+Epsilon: 0.3	Test Accuracy = 9468 / 10016 = 94.53
+第2次攻击, 模型: LeNet5, 数据集: MNIST, 攻击方式: PGD
+模型参数所在位置
+D:/Python_CG_Project/Study_Stage/savemodel/MNIST_LeNet5_GinzburgLandau_bz32_ep10_lr0.01_seedNone2.pth
+Epsilon: 0.01	Test Accuracy = 9892 / 10016 = 98.76
+Epsilon: 0.05	Test Accuracy = 9864 / 10016 = 98.48
+Epsilon: 0.1	Test Accuracy = 9812 / 10016 = 97.96
+Epsilon: 0.2	Test Accuracy = 9635 / 10016 = 96.20
+Epsilon: 0.25	Test Accuracy = 9534 / 10016 = 95.19
+Epsilon: 0.3	Test Accuracy = 9393 / 10016 = 93.78
+第3次攻击, 模型: LeNet5, 数据集: MNIST, 攻击方式: PGD
+模型参数所在位置
+D:/Python_CG_Project/Study_Stage/savemodel/MNIST_LeNet5_GinzburgLandau_bz32_ep10_lr0.01_seedNone3.pth
+Epsilon: 0.01	Test Accuracy = 9906 / 10016 = 98.90
+Epsilon: 0.05	Test Accuracy = 9884 / 10016 = 98.68
+Epsilon: 0.1	Test Accuracy = 9843 / 10016 = 98.27
+Epsilon: 0.2	Test Accuracy = 9734 / 10016 = 97.18
+Epsilon: 0.25	Test Accuracy = 9646 / 10016 = 96.31
+Epsilon: 0.3	Test Accuracy = 9530 / 10016 = 95.15
 

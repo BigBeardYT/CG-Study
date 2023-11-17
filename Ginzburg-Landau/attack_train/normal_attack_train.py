@@ -7,7 +7,7 @@ from my_utils.adversarial_train import adversarial_noise_train
 
 """ ######## 以下参数训练之前手动设置 ######### """
 attacked_batch_size = 32
-attacked_num_epochs = 5
+attacked_num_epochs = 10
 lr = 0.01
 data_name = 'MNIST'
 model_name = 'LeNet5'

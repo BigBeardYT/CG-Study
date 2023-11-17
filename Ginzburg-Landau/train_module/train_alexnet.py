@@ -18,6 +18,6 @@ train_datasets, test_datasets, train_loader, test_loader = get_datasets(batch_si
 
 my_custom_loss_train(data_name, model_name, num_classes,
          train_loader, test_loader,
-         batch_size, num_epochs, lr,
+         batch_size, num_epochs, lr, 0.1,
          1, 3)
 
