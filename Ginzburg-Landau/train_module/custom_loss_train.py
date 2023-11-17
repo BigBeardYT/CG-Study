@@ -10,7 +10,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
 def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_loader,
-             batch_size, num_epochs, learning_rate, start, end):
+             batch_size, num_epochs, learning_rate, epsilon, start, end):
     save_name = data_name + '_' + model_name + '_GinzburgLandau'
 
     if data_name != 'CiFar10' and data_name != 'SVHN':
@@ -40,7 +40,7 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
                 correct_pred = (pred == labels).sum()
                 train_acc = correct_pred / labels.shape[0]
                 # 计算损失
-                loss = custom_loss(outputs, images, labels, model, epsilon=0.05)
+                loss = custom_loss(outputs, images, labels, model, epsilon=epsilon)
 
                 # 反向传播和优化
                 optimizer.zero_grad()
@@ -84,7 +84,7 @@ def my_custom_loss_train(data_name, model_name, num_classes, train_loader, test_
 
 
 # 定义自定义的损失函数
-def custom_loss(outputs, images, labels, model, epsilon, alpha=0.6, beta=0.4):
+def custom_loss(outputs, images, labels, model, epsilon, alpha=0.618, beta=0.382):
     """
     :param outputs: 输出
     :param images: 原始图像输入
